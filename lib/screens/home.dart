@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:forqan/main.dart';
 import 'package:forqan/models/surah.dart';
 import 'package:forqan/screens/reading_page.dart';
 import 'package:quran/quran.dart' as quran;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:forqan/main.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  bool home = true;
   List<Surah> surahList = [];
   int selectedIndex = 0;
   bool isReverse = false;
@@ -35,23 +39,49 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Transform.rotate(
-          angle: isReverse ? pi : 2 * pi,
-          child: IconButton(
-              icon: Icon(Icons.sort),
-              onPressed: () {
-                setState(() {
-                  isReverse = !isReverse;
-                });
-              }),
-        ),
-      ),
-      body: surahList.isEmpty
-          ? Center(child: CircularProgressIndicator())
-          : chaptersList(isReverse ? surahList.reversed.toList() : surahList),
-    );
+    return (home)
+        ? Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        home = !home;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.black,
+                    ))
+              ],
+              backgroundColor: Colors.grey,
+              title: Text(
+                "قراني معي",
+                style: TextStyle(
+                    fontFamily: 'Kitab',
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+              leading: Transform.rotate(
+                angle: isReverse ? pi : 2 * pi,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.sort,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isReverse = !isReverse;
+                      });
+                    }),
+              ),
+            ),
+            body: surahList.isEmpty
+                ? Center(child: CircularProgressIndicator())
+                : chaptersList(
+                    isReverse ? surahList.reversed.toList() : surahList),
+          )
+        : MyApp();
   }
 
   Widget chaptersList(List<Surah> chapters) {
@@ -59,7 +89,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       controller: _controller,
       itemBuilder: (context, index) => ListTile(
         leading: CircleAvatar(
-          child: Text(chapters[index].id.toString()),
+          child: Text(
+            chapters[index].id.toString(),
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.grey,
         ),
         title: Text(chapters[index].name),
         subtitle: Text(chapters[index].versesCount.toString()),

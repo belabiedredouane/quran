@@ -13,7 +13,9 @@ class SurahPage extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.grey,
+        ),
         body: SafeArea(
           minimum: EdgeInsets.all(15),
           child: ListView(children: [
@@ -42,8 +44,10 @@ class SurahPage extends StatelessWidget {
                     WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
                         child: CircleAvatar(
+                          backgroundColor: Colors.grey,
                           child: Text(
                             '$i',
+                            style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.center,
                             textScaleFactor: i.toString().length <= 2 ? 1 : .8,
                           ),

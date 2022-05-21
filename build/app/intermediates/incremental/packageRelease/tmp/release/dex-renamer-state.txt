@@ -1,0 +1,4 @@
+#Sat May 21 15:05:11 WAT 2022
+base.0=C\:\\Users\\HP VICTUS\\Desktop\\Projet Flutter\\quran\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
